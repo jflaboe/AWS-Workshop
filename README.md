@@ -169,5 +169,37 @@ You will need to repeat these steps for our two Lambda functions: **add-user** a
       ```
 
 ### Configuring a Lambda in AWS
+Perform the following steps for each lambda function
+1. Navigate to the Lambda Service Console in AWS, then select "Create Function"
+2. Name your function {your NetID}-{function-name}
+3. Select a runtime language of Python 3.8
+4. Expand "choose or create an execution role" and choose the existing execution role called "lambdafullaccess" then create the function
+
+You'll now be in the Lambda configuration page for that function, and you'll need to do the following
+1. Under "Function Code", change the code entry type from "Edit code inline" to "upload a .zip file" and upload the deployment zip we made before
+2. Scroll down and change the timeout in basic settings to 1 minute
+3. Under "Network", choose the default VPC (this is where the RDS instance is located). Choose any 2 subnets and choose the default security group
+4. Press "Save" in the top right-hand corner of the screen
+
+
+### Creating a REST API with API Gateway
+Navigate to the API Gateway Service console within AWS. We'll need to create a new API. Make sure you name it with your **netID**. Keep all the default settings the same, just enter the name of your API.
+
+For each Lambda function, we'll need to create a corresponding REST API Resource
+1. In the resources section, select the "Actions" Dropdown and select "Create Resource"
+2. Name your resource after the function. For me, the resource names were called "add-user" and "get-user"
+3. Once you have created the resource, make sure it is selected, go to "Actions" again and select "Create Method"
+4. Using the Dropdown, make it a POST method. A page will open
+5. Check the box "Lambda proxy integration"
+6. Enter the name of the corresponding lambda function
+
+Once you've added both REST API methods, it's time to deploy the API Gateway.
+1. Select "Actions" and press "Deploy API"
+2. Select "[New Stage]" and call it whatever you'd like (I called mine test)
+3. Deploy and take note of the "Invoke URL"
+
+
+### Adding the API functionality to the website
+Take the Invoke URL you got from the deployment, and set the variable "API_URL" in [main.js](./web/js/main.js) to this URL. Then, re-upload the web files to your S3 bucket, and your website should be fully functioning!
   
   

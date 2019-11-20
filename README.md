@@ -40,6 +40,26 @@ Go ahead and press "Create Bucket." There are four sections to the setup:
 3. Set Permission: **uncheck** Block all public access
 4. Review: press "Create bucket"
 
+### Giving your bucket public access
+1. Navigate to Permissions
+2. Navigate to Bucket Policy
+3. Enter the following JSON:
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "PublicReadGetObject",
+            "Effect": "Allow",
+            "Principal": "*",
+            "Action": "s3:GetObject",
+            "Resource": "arn:aws:s3:::jfl9760/*"
+        }
+    ]
+}
+```
+4. Save
+
 ### Making your bucket a static website
 1. Navigate to your bucket overview page by clicking on the name of your bucket (Clicking on its row will highlight it but not navigate to the bucket overview page)
 2. Add all the files from the [web directory](./web) not including the directory itself. The structure of the S3 bucket should look like this: 
@@ -50,4 +70,104 @@ Go ahead and press "Create Bucket." There are four sections to the setup:
 You'll notice some tabs for adding users and searching users... This is for the second part of the workshop, where we'll add a user database functionality to our website.
 
 ## Part 2: Adding and Searching users using API Gateway, Lambda, and RDS
-In this portion, you'll create a REST API that your static website can use to make the sites content dynamic. The services used in the backend of this service is API Gateway, Lambda and Relational Database Service (RDS for short). If you're working on your own, you'll need to create your own RDS instance, but for the sake of the workshop I've created one that we'll all be sharing, so you only need to 
+In this portion, you'll create a REST API that your static website can use to make the sites content dynamic. The services used in the backend of this service is API Gateway, Lambda and Relational Database Service (RDS for short). If you're working on your own, you'll have created your own RDS instance in the [development environment setup](./docs/env_setup.md), but for the sake of the workshop I've created one that we'll all be sharing, so you only need to create two Lambda functions and an API Gateway.
+
+### Setting up the development environment for Lambda functions
+Lambda functions are (relatively) small pieces of code that are run on Amazon's dedicated Lambda servers. Even though we are using Amazon's servers, we are still creating a ***Serverless*** application because we don't have to actually manage any servers. Lambda code should be developed from your local machine, and then uploaded to AWS when it's ready to be used. While many languages are supported by AWS Lambda, we will be using **Python** for this workshop.
+
+### Installing/Setting up Python
+We will be using Python 3 along with pip, so make sure those are installed correctly. Try:
+```
+python -V
+```
+or 
+```
+python3 -V
+``` 
+in a terminal. This should output the version of Python. If you get an error or your version is not >3.0, please install Python.
+
+
+Similarly for pip:
+```
+pip -V
+```
+or
+```
+pip -V
+```
+Make sure pip is associated with the same Python version >3.0 as before
+
+
+Last, we will be using virtual environments to simulate the environment that each Lambda will be working in:
+```
+pip install virtualenv
+```
+
+### Creating a virtual environment and deployment package
+You will need to repeat these steps for our two Lambda functions: **add-user** and **get-user**.
+1. Navigate to ./lambda_functions/{function-name}
+2. Run the following command to create a virtual environment:
+  ```
+  virtualenv env
+  ```
+3. Activate/Enter your virtual environment
+
+  On macOS/Linux
+  ```
+  source env/bin/activate
+  ```
+  
+  On Windows
+  ```
+  .\env\Scripts\activate
+  ```
+  
+4. Install the necessary packages (requirements.txt is the list of dependencies)
+  ```
+  pip install -r requirements.txt
+  ```
+5. Make changes to the code:
+   - in lambda_function.py, change the variable called "rds_host" to "dotdev-workshop.cluster-cwujtc69zdof.us-east-2.rds.amazonaws.com"
+   - The RDS host is the endpoint of the database we are using
+ 
+6. Build the deployment package
+   1. Save dependencies:
+  
+   ```
+   pip freeze > requirements.txt
+   ```
+  
+   2. Make a deployment directory
+   ```
+   mkdir deploy
+   ```
+   
+   3. Install dependencies in the deployment directory
+   ```
+   pip install -r requirements.txt -t deploy
+   ```
+   
+   4. Copy the python files to the deployment directory
+   
+      On macOS/Linux
+   ```
+   cp *.py deploy
+   ```
+   
+       On Windows
+       
+   ```
+   copy *.py deploy
+   ```
+   
+   5. Zip the files into a deployment package
+      - For Windows, navigate into the 'deploy' directory, highlight all the files using Ctrl+A, then right click and press "Send to -> zip"
+      - For macOS/Linux, navigate into the deploy directory with the terminal, and run the following command:
+      
+      ```
+      zip -r deploy.zip *
+      ```
+
+### Configuring a Lambda in AWS
+  
+  

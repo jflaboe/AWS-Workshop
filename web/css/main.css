@@ -1,0 +1,17 @@
+.formgroup{
+    margin-bottom: 1.5%;
+}
+
+#add-person {
+    margin-left: 2%;
+}
+
+.card {
+    width: 18rem;
+    margin: 1%;
+    display: inline-block;
+}
+
+.cards {
+    display: inline-block;
+}

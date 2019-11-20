@@ -40,5 +40,14 @@ Go ahead and press "Create Bucket." There are four sections to the setup:
 3. Set Permission: **uncheck** Block all public access
 4. Review: press "Create bucket"
 
-### Adding files to your bucket
+### Making your bucket a static website
+1. Navigate to your bucket overview page by clicking on the name of your bucket (Clicking on its row will highlight it but not navigate to the bucket overview page)
+2. Add all the files from the [web directory](./web) not including the directory itself. The structure of the S3 bucket should look like this: 
+![alt-text](https://github.com/jflaboe/AWS-Workshop/blob/master/docs/images/s3%20example.JPG)
+3. Navigate to Properties and select "Static website hosting." Activate "Use this bucket to host a website," change the index document to "index.html" and press "Save."
+4. Re-open the "Static website hosting" card, and follow the link to your endpoint. You should see your static website!
   
+You'll notice some tabs for adding users and searching users... This is for the second part of the workshop, where we'll add a user database functionality to our website.
+
+## Part 2: Adding and Searching users using API Gateway, Lambda, and RDS
+In this portion, you'll create a REST API that your static website can use to make the sites content dynamic. The services used in the backend of this service is API Gateway, Lambda and Relational Database Service (RDS for short). If you're working on your own, you'll need to create your own RDS instance, but for the sake of the workshop I've created one that we'll all be sharing, so you only need to 

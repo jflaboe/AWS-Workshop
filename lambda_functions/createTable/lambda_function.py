@@ -5,7 +5,7 @@ import rds_config
 import pymysql
 
 
-rds_host  = "dotdev-workshop.cluster-cwujtc69zdof.us-east-2.rds.amazonaws.com"
+rds_host  = "endpoint goes here"
 name = rds_config.db_username
 password = rds_config.db_password
 db_name = rds_config.db_name

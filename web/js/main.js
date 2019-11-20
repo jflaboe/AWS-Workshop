@@ -1,4 +1,4 @@
-const API_URL = "https://h4sfca69w2.execute-api.us-east-2.amazonaws.com/test"
+const API_URL = "INSERT YOUR API GATEWAY URL HERE"
 
 class AddPerson extends React.Component {
     constructor(props) {
@@ -126,10 +126,10 @@ class About extends React.Component {
         return (
             <ul className="list-group-flush">
                 <li className="list-group-item">School: Northwestern University</li>
-                <li className="list-group-item">Major(s): Applied Math and Computer Science</li>
-                <li className="list-group-item">Clubs: Robotics, Track</li>
-                <li className="list-group-item">Looking for: Full-Stack Developer Position</li>
-                <li className="list-group-item">Hobbies: Piano, Running</li>
+                <li className="list-group-item">INSERT INFO HERE</li>
+                <li className="list-group-item">INSERT INFO HERE</li>
+                <li className="list-group-item">INSERT INFO HERE</li>
+                <li className="list-group-item">INSERT INFO HERE</li>
             </ul>
         )
     }
@@ -333,10 +333,10 @@ class MainApp extends React.Component {
                 <ul className="nav nav-tabs" id="myTab" role="tablist">
                     
                     <li className="nav-item">
-                        <a className="nav-link" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
+                        <a className="nav-link active" id="about-tab" data-toggle="tab" href="#about" role="tab" aria-controls="about" aria-selected="false">About</a>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link active" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="true">Add User</a>
+                        <a className="nav-link" id="add-tab" data-toggle="tab" href="#add" role="tab" aria-controls="add" aria-selected="true">Add User</a>
                     </li>
                     <li className="nav-item">
                         <a className="nav-link" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search" aria-selected="false">Search Users</a>
